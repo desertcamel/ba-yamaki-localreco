@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h3>Order List</h3>
+
+    {% if order_list %}
+    <ul>
+
+      {% for order in order_list %}
+      <li>
+          Customer: <a href="{% url 'customer-detail' order.customer.id %}"> {{order.customer.first_name}} </a> 
+          Last Order Delivered on: {{order.delivery_date}} for AED {{order.payment_total}}
+          <hr>
+          Order# <a href="{% url 'order-detail' order.id %}"> {{ order }}</a> 
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no orders to display!</p>
+    {% endif %}       
+{% endblock %}
