@@ -8,10 +8,10 @@
 
       {% for order in order_list %}
       <li>
-          Customer: <a href="{% url 'customer-detail' order.customer.id %}"> {{order.customer.first_name}} </a> 
+          Customer: <a href="{% url 'customer-detail' order.customer.pk %}"> {{order.customer.first_name}} </a> 
           Last Order Delivered on: {{order.delivery_date}} for AED {{order.payment_total}}
           <hr>
-          Order# <a href="{% url 'order-detail' order.id %}"> {{ order }}</a> 
+          Order# <a href="{% url 'order-detail' order.pk %}"> {{ order }}</a> 
       </li>
       {% endfor %}
 

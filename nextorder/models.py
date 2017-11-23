@@ -17,17 +17,22 @@ class Branch(models.Model):
         return '%s' % (self.branch_name)
 
 class Customer(models.Model):
-    phone_number = models.IntegerField(null=True)
+    phone_number = models.IntegerField(primary_key=True, null=False)
     last_name = models.CharField(max_length = 100, blank=True)
     first_name = models.CharField(max_length = 100, blank=True)
     age = models.IntegerField(null=True)
     email = models.EmailField(blank=True)
     address = models.CharField(max_length = 250, blank=True)
 
+    class Meta:
+        ordering = ['first_name']
+
     def __str__(self):
-        return '%s, %s' % (self.last_name, self.first_name)
+        return '%s' % (self.first_name)
 
-
+    def get_abolsute_url(self):
+        return reverse('customer-detail', args=[str(self.id)])
+        
 class Product(models.Model):
     sku = models.CharField(max_length=15, blank=True)
     name = models.CharField(max_length=100, blank=True)
@@ -39,15 +44,18 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    order_number = models.IntegerField(primary_key=True, null=False) # Primary Key
     customer = models.ForeignKey(Customer, blank=True, null=True)
     order_branch = models.ForeignKey(Branch, blank=True, null=True)
-    order_number = models.CharField(max_length=100, blank=True)
     order_date = models.DateField( blank=True, null=True)
     delivery_date = models.DateField(blank=True, null=True)
 #    delivery_date = models.CharField(max_length=15, blank=True)
-    payment_total = models.CharField(max_length=100, blank=True)
-    payment_advance = models.CharField(max_length=100, blank=True)
-    payment_balance = models.CharField(max_length=100, blank=True)
+    payment_total = models.FloatField(null=True)
+    payment_advance = models.FloatField(null=True)
+    payment_balance = models.FloatField(null=True)
+
+    class Meta:
+        ordering = ['-delivery_date']
 
     def __str__(self):
         return '%s' % (self.order_number)

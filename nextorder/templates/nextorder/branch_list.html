@@ -8,7 +8,7 @@
 
       {% for branch in branch_list %}
       <li>
-        <a href="{% url 'branch-detail' branch.id %}">{{ branch }}</a> ({{branch}})
+        <a href="{% url 'branch-detail' branch.pk %}">{{ branch }}</a> ({{branch}})
       </li>
       {% endfor %}
 
